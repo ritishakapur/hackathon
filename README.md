@@ -6,7 +6,7 @@ project studysmart
 - vanilla javascript
 - github pages (deployment)
 
-veiwbale at: https://ritisha.github.io/hackathon/
+viewable at: [https://ritisha.github.io/hackathon/](https://ritishakapur.github.io/hackathon/)
 
 ## running locally
 
