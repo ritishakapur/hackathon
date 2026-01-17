@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>study capsule</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <main class="container center">
+        <section id="mode-section">
+            <h1>lock in time</h1>
+            <p class="subtitle">choose your focus mode</p>
+
+            <div class="button-group">
+                <button id="start-stopwatch" class="card secondary">
+                    <div class="card-title">⏱️ stopwatch</div>
+                    <div class="card-sub">open-ended deep focus</div>
+                </button>
+
+                <button id="start-timer" class="card secondary">
+                    <div class="card-title">⏲️ timer</div>
+                    <div class="card-sub">set a defined focus block</div>
+                </button>
+            </div>
+        </section>
+
+        <section id="timer-section" class="hidden center">
+            <h2 id="mode-title">lock in time</h2>
+
+            <input type="text" id="time-display" value="00:00" maxlength="5" />
+
+            <div class="arrow-controls" id="arrow-controls">
+                <button id="decrease-time">▼</button>
+                <button id="increase-time">▲</button>
+            </div>
+
+            <button id="start-pause" class="card secondary"
+                style="width: 100%; max-width: 300px; margin: 0 auto 16px; display: block;">
+                start session
+            </button>
+
+            <button id="end-session" class="card secondary">
+                end session
+            </button>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
