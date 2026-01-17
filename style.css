@@ -86,3 +86,9 @@ h1 {
 .card:active {
     transform: translateY(-2px);
 }
+
+.card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
