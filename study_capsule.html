@@ -9,7 +9,6 @@
 
 <body>
     <main class="container center">
-        <!-- STATE 1: MODE SELECTION -->
         <section id="mode-section">
             <h1>lock in time</h1>
             <p class="subtitle">choose your focus mode</p>
@@ -27,7 +26,6 @@
             </div>
         </section>
 
-        <!-- STATE 2: ACTIVE SESSION -->
         <section id="timer-section" class="hidden center">
             <h2 id="mode-title">lock in time</h2>
 
@@ -38,12 +36,18 @@
                 <button id="increase-time">▲</button>
             </div>
 
+            <button id="start-pause" class="card secondary"
+                style="width: 100%; max-width: 300px; margin: 0 auto 16px; display: block;">
+                start session
+            </button>
+
             <button id="end-session" class="card secondary">
                 end session
             </button>
         </section>
+    </main>
 
-        <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
