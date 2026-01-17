@@ -16,15 +16,13 @@
 
 <body>
 
-    <main class="container">
-        <h1>
-            <center>welcome to your study space
-        </h1>
-        </center>
+    <!-- HOME SCREEN -->
+    <main class="container" id="home">
+        <h1 style="text-align: center;">welcome to your study space</h1>
         <p class="subtitle">what would you like to do?</p>
 
         <div class="button-group">
-            <button class="card primary">
+            <button class="card primary" id="startStudying">
                 <div class="card-title">start studying</div>
                 <div class="card-sub">
                     after 53647 hours of doom scrolling, you got this gang
@@ -40,7 +38,135 @@
         </div>
     </main>
 
-    <script src="script.js"></script>
-</body>
+    <!-- BRAIN DUMP SCREEN -->
+    <main class="container" id="brainDump" style="display: none;">
+        <h1>brain dump</h1>
+        <p class="subtitle">write down everything. then select the easiest task.</p>
 
+        <div id="taskList">
+            <input type="checkbox">
+            <input type="text" placeholder="enter a task"><br><br>
+
+            <input type="checkbox">
+            <input type="text" placeholder="enter a task"><br><br>
+
+            <input type="checkbox">
+            <input type="text" placeholder="enter a task"><br><br>
+        </div>
+
+        <button class="card primary" id="confirmTasks">
+            <div class="card-title">these are my tasks</div>
+            <div class="card-sub">pick the easiest one</div>
+        </button>
+    </main>
+
+    <!-- TASK CONFIRM SCREEN -->
+    <main class="container" id="taskConfirm" style="display: none;">
+        <h1>your task</h1>
+        <p class="subtitle" id="selectedTaskText"></p>
+
+        <button class="card primary" id="startTimer">
+            <div class="card-title">start 5 minute study time?</div>
+            <div class="card-sub">just begin</div>
+        </button>
+    </main>
+
+    <!-- TIMER SCREEN -->
+    <main class="container" id="timerScreen" style="display: none;">
+        <h1 id="timer">05:00</h1>
+        <p class="subtitle">focus only on this</p>
+    </main>
+
+    <!-- COMPLETION SCREEN -->
+    <main class="container" id="completionScreen" style="display: none;">
+        <h1>nice work ✨</h1>
+        <p class="subtitle">you showed up</p>
+
+        <div class="button-group">
+            <button class="card secondary" id="goHome">
+                <div class="card-title">go home</div>
+                <div class="card-sub">return to start</div>
+            </button>
+
+            <button class="card primary" id="goCapsule">
+                <div class="card-title">study capsule</div>
+                <div class="card-sub">continue your flow</div>
+            </button>
+        </div>
+    </main>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            function showScreen(id) {
+                document.querySelectorAll(".container").forEach(el => {
+                    el.style.display = "none";
+                });
+                document.getElementById(id).style.display = "block";
+            }
+
+            // Start studying
+            document.getElementById("startStudying").addEventListener("click", () => {
+                showScreen("brainDump");
+            });
+
+            // Confirm tasks
+            document.getElementById("confirmTasks").addEventListener("click", () => {
+                const checkboxes = document.querySelectorAll("#taskList input[type='checkbox']");
+                const inputs = document.querySelectorAll("#taskList input[type='text']");
+
+                let selectedTask = "";
+
+                checkboxes.forEach((box, i) => {
+                    if (box.checked && inputs[i].value.trim() !== "") {
+                        selectedTask = inputs[i].value;
+                    }
+                });
+
+                if (!selectedTask) {
+                    alert("please select one task");
+                    return;
+                }
+
+                document.getElementById("selectedTaskText").textContent = selectedTask;
+                showScreen("taskConfirm");
+            });
+
+            // Start timer
+            document.getElementById("startTimer").addEventListener("click", () => {
+                showScreen("timerScreen");
+
+                let timeLeft = 300;
+                const timerEl = document.getElementById("timer");
+
+                const interval = setInterval(() => {
+                    const min = Math.floor(timeLeft / 60);
+                    const sec = timeLeft % 60;
+
+                    timerEl.textContent =
+                        `${String(min).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
+
+                    timeLeft--;
+
+                    if (timeLeft < 0) {
+                        clearInterval(interval);
+                        showScreen("completionScreen");
+                    }
+                }, 1000);
+            });
+
+            // Completion actions
+            document.getElementById("goHome").addEventListener("click", () => {
+                location.reload();
+            });
+
+            document.getElementById("goCapsule").addEventListener("click", () => {
+                alert("study capsule coming next 👀");
+            });
+
+        });
+    </script>
+
+</body>
 </html>
