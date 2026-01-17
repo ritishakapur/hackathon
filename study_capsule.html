@@ -3,40 +3,47 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Study Capsule</title>
+    <title>study capsule</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 
-<body class="capsule-body">
+<body>
+    <main class="container center">
+        <!-- STATE 1: MODE SELECTION -->
+        <section id="mode-section">
+            <h1>lock in time</h1>
+            <p class="subtitle">choose your focus mode</p>
 
-    <!-- MODE SELECTION -->
-    <div class="button-group">
-        <button id="start-stopwatch" class="mode-btn">
-            ⏱️ Stopwatch
-        </button>
+            <div class="button-group">
+                <button id="start-stopwatch" class="card secondary">
+                    <div class="card-title">⏱️ stopwatch</div>
+                    <div class="card-sub">open-ended deep focus</div>
+                </button>
 
-        <button id="start-timer" class="mode-btn">
-            ⏲️ Timer
-        </button>
-    </div>
+                <button id="start-timer" class="card secondary">
+                    <div class="card-title">⏲️ timer</div>
+                    <div class="card-sub">set a defined focus block</div>
+                </button>
+            </div>
+        </section>
 
-    <!-- TIMER SCREEN -->
-    <div id="timer-screen" class="hidden">
-        <h2 id="mode-title"></h2>
-
-        <!-- TIME INPUT -->
-        <div class="time-input">
-            <button id="increase-time">▲</button>
+        <!-- STATE 2: ACTIVE SESSION -->
+        <section id="timer-section" class="hidden center">
+            <h2 id="mode-title">lock in time</h2>
 
             <input type="text" id="time-display" value="00:00" maxlength="5" />
 
-            <button id="decrease-time">▼</button>
-        </div>
+            <div class="arrow-controls" id="arrow-controls">
+                <button id="decrease-time">▼</button>
+                <button id="increase-time">▲</button>
+            </div>
 
-        <button id="end-session" class="end-btn">End Session</button>
-    </div>
+            <button id="end-session" class="card secondary">
+                end session
+            </button>
+        </section>
 
-    <script src="script.js"></script>
+        <script src="script.js"></script>
 </body>
 
 </html>

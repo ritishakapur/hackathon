@@ -1,59 +1,91 @@
-let interval;
+let mode = null;
+let intervalId = null;
 let seconds = 0;
-let isStopwatch = false;
 
-const stopwatchBtn = document.getElementById("start-stopwatch");
-const timerBtn = document.getElementById("start-timer");
-const timerScreen = document.getElementById("timer-screen");
-const timeDisplay = document.getElementById("time-display");
-const modeTitle = document.getElementById("mode-title");
-const endSessionBtn = document.getElementById("end-session");
+const modeSection = document.getElementById('mode-section');
+const timerSection = document.getElementById('timer-section');
+const timeDisplay = document.getElementById('time-display');
+const modeTitle = document.getElementById('mode-title');
+const arrowControls = document.getElementById('arrow-controls');
 
-if (stopwatchBtn && timerBtn) {
-    stopwatchBtn.addEventListener("click", () => {
-        isStopwatch = true;
-        seconds = 0;
-        startSession("stopwatch mode");
-    });
+// Start Stopwatch
+document.getElementById('start-stopwatch').addEventListener('click', () => {
+    mode = 'stopwatch';
+    seconds = 0;
+    modeSection.classList.add('hidden');
+    timerSection.classList.remove('hidden');
+    modeTitle.textContent = '⏱️ stopwatch';
+    arrowControls.style.display = 'none';
+    timeDisplay.value = '00:00';
+    timeDisplay.readOnly = true;
+    startStopwatch();
+});
 
-    timerBtn.addEventListener("click", () => {
-        const minutes = prompt("enter duration in minutes");
-        if (!minutes) return;
-        isStopwatch = false;
-        seconds = minutes * 60;
-        startSession("timer mode");
-    });
-}
+// Start Timer
+document.getElementById('start-timer').addEventListener('click', () => {
+    mode = 'timer';
+    seconds = 0;
+    modeSection.classList.add('hidden');
+    timerSection.classList.remove('hidden');
+    modeTitle.textContent = '⏲️ timer';
+    arrowControls.style.display = 'flex';
+    timeDisplay.value = '00:00';
+    timeDisplay.readOnly = false;
+});
 
-function startSession(title) {
-    document.querySelector(".button-group").style.display = "none";
-    timerScreen.classList.remove("hidden");
-    modeTitle.textContent = title;
-
-    interval = setInterval(() => {
-        if (!isStopwatch) {
-            if (seconds <= 0) {
-                endSession();
-                return;
-            }
-            seconds--;
-        } else {
-            seconds++;
-        }
-
+// Stopwatch Logic
+function startStopwatch() {
+    intervalId = setInterval(() => {
+        seconds++;
         updateDisplay();
     }, 1000);
 }
 
+// Increase Time (Timer only)
+document.getElementById('increase-time').addEventListener('click', () => {
+    if (mode === 'timer') {
+        seconds += 60;
+        updateDisplay();
+    }
+});
+
+// Decrease Time (Timer only)
+document.getElementById('decrease-time').addEventListener('click', () => {
+    if (mode === 'timer' && seconds >= 60) {
+        seconds -= 60;
+        updateDisplay();
+    }
+});
+
+// Manual Edit for Timer
+timeDisplay.addEventListener('blur', () => {
+    if (mode === 'timer') {
+        const value = timeDisplay.value;
+        const parts = value.split(':');
+        if (parts.length === 2) {
+            const mins = parseInt(parts[0]) || 0;
+            const secs = parseInt(parts[1]) || 0;
+            seconds = mins * 60 + secs;
+            updateDisplay();
+        }
+    }
+});
+
+// Update Display
 function updateDisplay() {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
-    timeDisplay.textContent =
-        `${mins}:${secs < 10 ? "0" : ""}${secs}`;
+    timeDisplay.value = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
 }
 
-function endSession() {
-    clearInterval(interval);
-    alert("session ended");
-    location.reload();
-}
+// End Session
+document.getElementById('end-session').addEventListener('click', () => {
+    if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+    }
+    timerSection.classList.add('hidden');
+    modeSection.classList.remove('hidden');
+    mode = null;
+    seconds = 0;
+});
